@@ -1,0 +1,93 @@
+<div class="row mb-5">
+
+  <div class="col">
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z" />
+        </svg></span>
+      <input type="text" [(ngModel)]="filterAddress" class="form-control form-control-lg" placeholder="Adresa"
+        aria-label="Adresa" aria-describedby="basic-addon1">
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="input-group">
+      <select class="form-select form-select-lg" [(ngModel)]="filterType" aria-label="Default select example">
+        <option value="default" [selected]>Odaberite tip...</option>
+        <option *ngFor="let type of atmTypes" [value]="type.id">{{type.type}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button type="button" (click)="onFilter()" class="btn btn-lg btn-outline-primary me-4"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+            viewBox="0 0 16 16">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg></button>
+        <button *ngIf="userRole=='admin'" routerLink="new" type="button" class="btn btn-lg btn-outline-success"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+          </svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+<table class="table shadow-sm table-sm table-striped table-hover ">
+  <thead>
+    <tr>
+      <th scope="col">Red. br.</th>
+      <th scope="col">Adresa</th>
+      <th scope="col">Tip</th>
+      <th scope="col">Napomena</th>
+      <th scope="col">
+        <!--details-->
+      </th>
+      <th scope="col" *ngIf="userRole=='admin'">
+        <!--edit-->
+      </th>
+      <th scope="col" *ngIf="userRole=='admin'">
+        <!--delete-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let atm of atms;let i = index">
+      <th>{{i+1}}.</th>
+      <td>{{atm.address}}</td>
+      <td>{{atm.type.type}}</td>
+      <td>{{atm.annotation}}</td>
+      <td><button (click)="onSelectAtm(atm)" routerLink="" class="btn btn-dark text-white "><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-lg"
+            viewBox="0 0 16 16">
+            <path
+              d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704l1.323-6.208Zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0Z" />
+          </svg></button></td>
+      <td *ngIf="userRole=='admin'"><button [routerLink]="['edit',atm.id]" class="btn btn-warning  text-white"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg></button></td>
+      <td *ngIf="userRole=='admin'"><button (click)="onDelete(atm.id)" class="btn btn-danger  "><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+          </svg></button></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<app-atm-detail (close)="selectedAtm=undefined" *ngIf="selectedAtm" [atm]="selectedAtm"></app-atm-detail>

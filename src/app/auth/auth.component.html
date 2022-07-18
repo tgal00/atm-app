@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row mt-5 mb-5 justify-content-center">
+    <div class="col col-lg-6">
+      <div class="card shadow-sm">
+        <p class="small text-muted">username/pass: admin/admin | user/user</p>
+        <div *ngIf="error==-1" class="alert alert-danger text-center" role="alert">
+          Wrong credentials
+        </div>
+        <img
+          src="https://img.freepik.com/free-vector/client-using-online-bank-service-woman-using-computer-payments-transaction-flat-vector-illustration-internet-finance-technology_74855-8290.jpg?w=1480&t=st=1657888725~exp=1657889325~hmac=2f3a33e2139f3b270fa2464392080f11f3d505e281ee384e3c2c16b16ba1bb65"
+          class="card-img-top" alt="...">
+
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <p class="lead">Sign In</p>
+            <div class="form-floating mb-3">
+              <input type="text" required  class="form-control form-control-lg" id="floatingInput" placeholder="name@example.com" formControlName="username">
+              <label for="floatingInput">Username</label>
+            </div>
+            
+            <div class="form-floating">
+              <input type="password" required  class="form-control form-control-lg" id="floatingPassword" placeholder="Password" formControlName="password">
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary mt-3">Login</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

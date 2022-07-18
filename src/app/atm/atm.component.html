@@ -1,0 +1,17 @@
+<div class="container mt-5">
+  <div class="row justify-content-end mb-5">
+    <div class="col-auto">
+
+      <p>Logged as <strong>{{getUser()}}</strong> <button class="ms-2 btn btn-outline-secondary btn-sm"
+          (click)="logout()"> Logout</button></p>
+    </div>
+  </div>
+
+  <div class="row border rounded-3   p-3 shadow mb-5">
+    <div class="col">
+      <app-atm-list></app-atm-list>
+    </div>
+  </div>
+
+
+</div>
